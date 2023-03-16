@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/Carine/Documents/GitHub/DSS_CW2_Code/secure-app",
+      "program": "/Users/Carine/Documents/GitHub/DSS_CW2_Code/secure-app/build/Debug/outDebug"
+    }
+  ]
+}

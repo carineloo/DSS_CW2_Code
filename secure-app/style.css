@@ -1,0 +1,77 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+}
+
+.html, body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+    background: linear-gradient(lavender, #9198e5);
+}
+
+.content {
+    margin-bottom: 8%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title-search {
+    color: black;
+    font-size: 80px;
+    margin: 0;
+}
+
+.input-form {
+    font-size: 24px;
+    color: black;
+    text-align: left;
+    min-width: 500px;
+    max-width: 900px;
+    padding: 14px;
+    margin-right: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    outline: none;
+    background-color:#a7aeff1e;
+}
+
+.input-form:focus {
+    border: 3px solid black;
+}
+
+.main-button {
+    font-size: 24px;
+    color: black;
+    background: none;
+    padding: 14px;
+    margin: 50px 0;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color:#a7aeff1e;
+}
+
+.main-button:hover {
+    background-color:#858fffce;
+    color: white;
+}
+
+.query-out {
+    margin: 0;
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.query {
+    color: black;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
