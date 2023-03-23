@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .error-message{
+            padding: 20px;
+            /* display: block; */
+            color: red;
+        }
+    </style>
+
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8" >
+
+    <title>Validation System</title>
+    <script src="validation.js"></script>
+
+</head>
+
+<body>
+    <div class="content">
+        <h1 class="title-loginform">Login Form</h1>
+
+        <!-- login -->
+        <form class="loginForm" id="loginForm" method="post" action="" onsubmit="">
+            
+            <label for="email"> EMAIL ADDRESS </label>
+            <input type="email" name="email" id="email" placeholder="Your email" >
+
+            <label for="email"> PASSWORD</label>
+            <input type="password" name="password" id="password" placeholder="Your password">
+
+            <p class="error-message" id="error-message"></p>
+
+            <button class="submit" type="button" id="submit" alt="submit" onclick="login()">Login</button>
+        </form>
+
+
+        <!-- register form -->
+        <form>
+            <h2>Registration</h2>
+            <input id="newEmail" type="email" placeholder="Your email address">
+            <input id="newPassword" placeholder="create a password">
+            <button type="button" onclick="registerUser()"> register</button>
+        </form>
+
+    </div>
+
+
+</body>
+
+
+</html>
