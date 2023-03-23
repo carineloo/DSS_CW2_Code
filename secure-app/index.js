@@ -8,13 +8,18 @@ if (document.readyState == 'loading') {
 }
 
 function ready() {
-	var query = new URL(window.location).searchParams.get('query')
-    
-	document.getElementById('query-input').value = query
-	document.getElementById('query-output').innerHTML = query
+    var query = new URL(window.location).searchParams.get('query')
+
+    document.getElementById('query-input').value = query
+    document.getElementById('query-output').innerHTML = query
 }
 
 /* ---------------------------------------------------------------------- */
+
+function formStopRefresh(e) {
+    e.preventDefault();
+}
+document.getElementById("form-id").addEventListener('submit', formStopRefresh);
 
 const tag = (text) => {
     const element = document.createElement('tag')

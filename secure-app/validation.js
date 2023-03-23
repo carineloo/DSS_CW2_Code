@@ -37,9 +37,6 @@ function login(){
 }
 
 
-
-
-
 //// register new user account ////
 function registerUser(){
     var registerEmail =  document.getElementById('newEmail').value
