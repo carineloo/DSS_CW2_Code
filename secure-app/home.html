@@ -10,84 +10,21 @@
 
 <body>
     <div class="content">
-        
+
         <h1 class="title-search">Site Test</h1>
 
-        <form class="form" id="form-id" autocomplete="off" onsubmit="return false;">
+        <form class="form" id="form-id" autocomplete="off">
             <input class="input-form" id="query-input" type="text" name="query" />
             <button class="main-button" type="submit" role="button" onclick="convertText()">Search</button>
         </form>
 
-        <h3 class="query-out">Scripted: <span id="query-output" class="query"></span></h3>
+        <h3 class="out-query">Scripted: <span id="query-output" class="query"></span></h3>
+
     </div>
 
-    <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+    <!-- login and register -->
 
-    <div id="id01" class="modal">
     
-    <form class="modal-content animate" action="/action_page.php" method="post">
-        <div class="imgcontainer">
-        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-        </div>
-
-        <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-            
-        <button type="submit">Login</button>
-        </div>
-
-        <div class="container" style="background-color:#f1f1f1">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        </div>
-    </form>
-    </div>
-
-    <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Register</button>
-
-    <div id="id02" class="modal">
-    
-        <form class="modal-content animate" action="/action_page.php" method="post">
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-            </div>
-        
-            <div class="container">
-                <label for="uname"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
-        
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-                
-                <button type="submit">Register</button>
-            </div>
-        
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
-            </div>
-        </form>
-    </div>
-  
-
-<script>
-// Get the modal
-var loginClick = document.getElementById('id01');
-var registerClick= document.getElementById('id02');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == loginClick) {
-        loginClick.style.display = "none";
-    }
-    else if (event.target == registerClick)
-    {
-        registerClick.style.display = "none";
-    }
-}
-</script>
 
 </body>
 

@@ -1,4 +1,4 @@
-// document.cookie = "my_username_is_so_cool"
+document.cookie = "my_username_is_so_cool"
 document.cookie = "super_safe_password_amirite"
 
 if (document.readyState == 'loading') {
@@ -8,10 +8,10 @@ if (document.readyState == 'loading') {
 }
 
 function ready() {
-    var query = new URL(window.location).searchParams.get('query')
-
-    document.getElementById('query-input').value = query
-    document.getElementById('query-output').innerHTML = query
+	var query = new URL(window.location).searchParams.get('query')
+    
+	document.getElementById('query-input').value = query
+	document.getElementById('query-output').innerHTML = query
 }
 
 /* ---------------------------------------------------------------------- */
@@ -28,12 +28,11 @@ function convertText() {
     console.log(converted)
 }
 
-
-const convert = (e) => {
-    const input1 = document.getElementById('query-input')
-    e = input1.value
-    console.log(e) 
-}
+// const convert = (e) => {
+//     const input1 = document.getElementById('query-input')
+//     e = input1.value
+//     console.log(e) 
+// }
 
 // console.log(tag('<div>'))
 // console.log('<div>')
