@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .error-message {
+        padding: 20px;
+        /* display: block; */
+        color: red;
+    }
+</style>
+
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Registration System</title>
+
+</head>
+
+<body>
+    <div class="nav">
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>          
+        </ul>
+    </div>
+
+        <!-- register form -->
+ 
+    <div class="content">
+        <h1 class="title-registerform">Registration Form</h1>
+
+        <!-- register -->
+        <form method="post" action="/user/register">
+            <div>
+                <label for="email"> EMAIL ADDRESS </label>
+                <input type="email" name="email" id="email" placeholder="Your email address" required>
+            </div>
+            <div>
+                <label for="username"> USERNAME </label>
+                <input type="text" name="username" id="username" placeholder="Create a username" required>
+            </div>
+            <div>
+                <label for="password"> PASSWORD</label>
+                <input type="password" name="password" id="password" placeholder="Create a password" required>
+            </div>
+                <p class="error-message" id="error-message"></p>
+
+                <input type="submit" value="Register" />
+        </form>
+
+    </div>
+
+
+</body>
+
+</html>

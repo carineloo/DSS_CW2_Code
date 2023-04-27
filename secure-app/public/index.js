@@ -1,3 +1,5 @@
+
+
 document.cookie = "my_username_is_so_cool"
 document.cookie = "super_safe_password_amirite"
 
@@ -59,4 +61,7 @@ XSS:
 - using html entities
 
 */
+
+/* ---------------------------------------------------------------------------*/
+
 
