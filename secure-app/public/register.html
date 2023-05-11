@@ -1,18 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-    .error-message {
-        padding: 20px;
-        /* display: block; */
-        color: red;
-    }
-</style>
-
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
     <link rel="stylesheet" href="style.css">
-    <title>Registration System</title>
+    <title>Registration</title>
 
 </head>
 
@@ -20,38 +12,55 @@
     <div class="nav">
         <ul>
             <li><a href="home.html">Home</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="register.html">Register</a></li>          
         </ul>
     </div>
 
-        <!-- register form -->
- 
-    <div class="content">
-        <h1 class="title-registerform">Registration Form</h1>
+    <!-- register form -->
+    <div class="section-2">
+        <div class="content">
+            <p id="show-alert"></p>
+            <h1 class="title-registerform">Registration Form</h1>
+            <!-- register -->
+            <form id="register-form" method="post" action="/user/register" novalidate>
+                <input type="hidden" id="csrf_token" name="_csrf" value="">
 
-        <!-- register -->
-        <form method="post" action="/user/register">
-            <div>
-                <label for="email"> EMAIL ADDRESS </label>
-                <input type="email" name="email" id="email" placeholder="Your email address" required>
-            </div>
-            <div>
-                <label for="username"> USERNAME </label>
+                <label for="username">Username:</label>
                 <input type="text" name="username" id="username" placeholder="Create a username" required>
-            </div>
-            <div>
-                <label for="password"> PASSWORD</label>
+
+                <label for="email">Email Address:</label>
+                <input type="email" name="email" id="email" placeholder="Your email address" required>
+
+                <label for="password">Password:</label>
                 <input type="password" name="password" id="password" placeholder="Create a password" required>
-            </div>
+
                 <p class="error-message" id="error-message"></p>
 
-                <input type="submit" value="Register" />
-        </form>
-
+                <button id="register-btn" type="submit" value="Register" onclick="submitForm()">Register!</button>
+            </form>
+        </div>
     </div>
 
-
 </body>
+<script>
+    var currentTime = new Date().getTime();
+
+    document.onmousemove = function (event) {
+        currentTime = new Date().getTime();
+    }
+    document.onkeypress = function () {
+        currentTime = new Date().getTime();
+    }
+    function pageRefresh() {
+        if (new Date().getTime() - currentTime >= 10000) {
+            alert("Session expired.");
+            location.href = '/home.html';
+        } else {
+            setTimeout(pageRefresh, 10000);
+        }
+    }
+    setTimeout(pageRefresh, 1000);
+</script>
+<script type="text/javascript" src="register.js"></script>
+<script type="text/javascript" src="doubleCookies.js"> </script>
 
 </html>

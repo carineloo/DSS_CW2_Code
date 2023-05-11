@@ -1,42 +1,66 @@
 <!DOCTYPE html>
 <html>
 
+<!-- reconfigured login to secure login url -->
+<!-- file inclusion vulnerability -->
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+    <meta name="viewport" http-equiv="Content-Security-Policy" initial-scale=1" charset="utf-8">
     <link rel="stylesheet" href="style.css">
     <title>Developing Secure System</title>
 
 </head>
 
 <body>
-    <div class="nav">
-        <ul>
-            <li><a href="home.html">Home</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="register.html">Register</a></li>
-        </ul>
+
+    <div class="section">
+        <div class="content">
+            <div class="homepage">
+                <h1 class="">Welcome to my space!</h1>
+                <p>
+                    <button onclick="reDir()">Login</button>
+                    &nbsp | &nbsp
+                    <a href="register.html"> Register</a>
+                </p>
+            </div>
+        </div>
     </div>
 
-    <div class="content">
+    <div class="row">
+        <div class="column">
+            <img src="./img/2020-7.jpg">
+            <img src="./img/2019-5.jpg">
+            <img src="./img/2019-6.jpg">
+            <img src="./img/2020-6.jpg">
+            <img src="./img/2020-1.jpg">
+            <img src="./img/2019-13.jpg">
 
-        <h1 class="title-search">Site Test</h1>
-
-        <form class="form" id="form-id" autocomplete="off">
-            <input class="input-form" id="query-input" type="text" name="query" />
-            <button class="main-button" type="submit" role="button" onclick="convertText()">Search</button>
-        </form>
-
-        <h3 class="out-query">Scripted: <span id="query-output" class="query"></span></h3>
-
+        </div>
+        <div class="column">
+            <img src="./img/2019-10.jpg">
+            <img src="./img/2021-13.png">
+            <img src="./img/2019-11.jpg">
+            <img src="./img/2021-15.png">
+            <img src="./img/2019-4.jpg">
+            <img src="./img/2021-3.png">
+            <img src="./img/2019-1.jpg">
+        </div>
+        <div class="column">
+            <img src="./img/2021-11.png">
+            <img src="./img/2020-2.jpg">
+            <img src="./img/2019-15.jpg">
+            <img src="./img/2019-16.jpg">
+            <img src="./img/2021-5.png">
+            <img src="./img/2020-3.jpg">
+        </div>
+        <!-- <div class="column">
+        </div> -->
     </div>
 
-    <!-- login and register -->
-
-
+    <footer>©2023 Project. All image rights cannot be used without consent. </footer>
 
 </body>
 
-
-<script src="index.js"></script>
+<script src="login.js"></script>
 
 </html>

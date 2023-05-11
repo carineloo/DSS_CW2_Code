@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Login System</title>
+
+</head>
+
+<body>
+    <div class="nav">
+        <ul>
+            <li><a href="home.html">Home</a></li>
+        </ul>
+    </div>
+
+    <div class="section-2">
+        <div class="content">
+            <p id="show-alert"></p>
+
+            <h1 class="title-loginform">Login</h1>
+
+            <!-- login -->
+            <form id="login-form" method="POST" action="/user/secureLogin" novalidate>
+
+                <input type="hidden" id="csrf_token" name="_csrf" value="">
+
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" placeholder="Your username" required>
+
+                <label for="email"></label>
+                <input type="hidden" name="email" id="email" placeholder="Your username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="Your password" required>
+
+                <p class="error-message" id="error-message"></p>
+
+                <button type="submit" value="Login" onclick="submitForm()">Login</button>
+
+                <p id="show-loading"></p>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    // Set session timeout
+    var currentTime = new Date().getTime();
+
+    // checks for any mouse movement
+    document.onmousemove = function (event) {
+        currentTime = new Date().getTime();
+    }
+    document.onkeypress = function () {
+        currentTime = new Date().getTime();
+    }
+    function pageRefresh() {
+        if (new Date().getTime() - currentTime >= 10000) {
+            alert("Session expired. Please try again.");
+            location.href = '/home.html';
+        } else {
+            setTimeout(pageRefresh, 10000);
+        }
+    }
+    // keeps refreshing page
+    setTimeout(pageRefresh, 1000);
+</script>
+
+<script type="text/javascript" src="secureLogin.js"> </script>
+<script type="text/javascript" src="doubleCookies.js"> </script>
+
+</html>

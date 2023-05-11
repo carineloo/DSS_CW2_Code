@@ -6,14 +6,39 @@
 
 .html,
 body {
-    height: 100vh;
-    width: 100vw;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(lavender, #9198e5);
+}
+
+.section {
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: center;
     align-items: center;
-    background: linear-gradient(lavender, #9198e5);
+}
+
+/* login, register */
+.section-2 {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+}
+
+.content {
+    margin-bottom: 8%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer {
+    margin: 2rem;
+    font-size: 15px;
 }
 
 /* ------------- navigation ------------- */
@@ -26,11 +51,13 @@ body {
 }
 
 ul {
-    list-style-type: none;  
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
 }
 
 li {
-    margin: 2px;
+    margin-right: 8px;
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
@@ -45,22 +72,151 @@ a:visited {
 }
 
 a:hover {
-    color:#9198e5;
-    transition: 0.2s;
+    color: #9399de;
+    text-decoration: underline;
+    transition: 0.3s;
 }
 
-/* ------------- body ------------- */
 
-.content {
+/* ------------- homepage welcome------------- */
+
+.homepage {
+    margin-top: 13rem;
     margin-bottom: 8%;
     margin-left: auto;
     margin-right: auto;
+    padding: 50px;
+    font-size: 25px;
+    border: 4px solid black;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 6px 13px rgb(134, 134, 134);
 }
 
+.homepage button {
+    padding: 0;
+    color: teal;
+    font-size: 22px;
+    font-style: italic;
+    border: none;
+    background: none;
+}
+
+.homepage button:hover {
+    color: rgb(107, 71, 107);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.homepage p a {
+    color: teal;
+    font-size: 22px;
+    font-style: italic;
+}
+
+.homepage p a:hover {
+    color: rgb(107, 71, 107);
+    text-decoration: underline;
+    transition: 0.3s;
+}
+
+
+/* ------------- login ------------- */
+
+.title-loginform {
+    font-size: 50px;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid white;
+    border-radius: 10px;
+    padding: 60px 90px;
+    font-size: 28px;
+    box-shadow: 6px 13px rgba(128, 128, 128, 0.5);
+}
+
+#login-form label {
+    margin-top: 15px;
+    border-radius: 10px;
+    background: none;
+}
+
+#login-form input {
+    margin-top: 8px;
+    width: 15rem;
+    padding: 8px;
+    background-color: #FFF8E8;
+    border: none;
+    border-radius: 8px;
+}
+
+#login-form button {
+    width: 7rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 7px;
+    font-size: 18px;
+}
+
+
+/* ------------- register ------------- */
+
+.title-registerform {
+    font-size: 50px;
+}
+
+#register-form {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid white;
+    border-radius: 10px;
+    padding: 60px 90px;
+    font-size: 28px;
+    box-shadow: 6px 13px rgba(128, 128, 128, 0.5);
+}
+
+#register-form label {
+    margin-top: 15px;
+    border-radius: 10px;
+    background: none;
+}
+
+#register-form input {
+    margin-top: 8px;
+    width: 15rem;
+    padding: 8px;
+    background-color: #FFF8E8;
+    border: none;
+    border-radius: 8px;
+}
+
+#register-form button {
+    width: 7rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 7px;
+    font-size: 18px;
+}
+
+
+/* ------------- dashboard ------------- */
+
 .title-search {
+    margin-top: 13rem;
     color: black;
-    font-size: 80px;
-    margin: 0;
+    font-size: 60px;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #FFF8E8;
+    box-shadow: 6px 13px rgba(128, 128, 128, 0.5);
+}
+
+#form-id {
+    margin-top: 20px;
 }
 
 .input-form {
@@ -96,20 +252,82 @@ a:hover {
 .main-button:hover {
     background-color: #858fffce;
     color: white;
+    transition: .2s;
 }
 
 .out-query {
-    margin: 0;
+    margin-top: 8px;
     color: black;
-    font-size: 30px;
-    font-weight: bold;
 }
 
-.query {
-    color: black;
-    font-weight: normal;
-    text-decoration: underline;
+#dash .column {
+    /* border: 2px solid white; */
+    border-radius: 5px;
+    height: 100vh;
+} 
+
+#dash-1 {
+    margin-right: 5px;
+    border: 2px solid #9C7CA5;
+}
+
+#dash-2 {
+    border: 2px solid #85B79D;
+    margin-right: 5px;
+}
+
+#dash-3 {
+    border: 2px solid #B098A4;
+}
+
+#dash .column {
+    flex: 33%;
+    max-width: 33%;
+    padding: 0 4px;
+}
+
+#image{
+    height: auto;
+    width: 80%;
+    max-width: 350px;
+  }
+
+/* images */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+/* Create 3 or 4 columns */
+.column {
+    flex: 33.3%;
+    max-width: 33.3%;
+    padding: 0 4px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 100%;
 }
 
 
-/* ------------- login ------------- */
+/* Responsive layout - makes a two column-layout instead of four columns */
+
+@media screen and (max-width: 800px) {
+    .column {
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+
+@media screen and (max-width: 600px) {
+    .column {
+        flex: 100%;
+        max-width: 100%;
+    }
+}

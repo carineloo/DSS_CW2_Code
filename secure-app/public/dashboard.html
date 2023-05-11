@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" http-equiv="Content-Security-Policy" initial-scale=1" charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
+
+</head>
+
+<body>
+    <div class="nav">
+        <ul>
+            <li><a href="home.html">Home - Logout</a></li>
+        </ul>
+    </div>
+    <div class="section">
+        <div class="content">
+            <h1 class="title-search">Make a post!</h1>
+            <!-- form -->
+            <form class="form" id="form-id" autocomplete="off">
+                <!-- input -->
+                <input class="input-form" id="query-input" type="text" name="query" onkeyup="input()" />
+                <!-- button enter -->
+                <button class="main-button" id="btn" type="submit" role="button">Post</button>
+            </form>
+
+            <label for="file">Select a file:</label>
+            <input type="file" id="file" name="file" accept=".jpg, .png, .pdf, .jpeg, .docs image/*">
+            <button type="submit" onclick="fileSubmit()">Submit</button>
+        </div>
+    </div>
+
+    <div class="row" id="dash">
+        <div class="column" id="dash-1">
+            <h2>Older Posts:</h2>
+
+        </div>
+        <div class="column" id="dash-2">
+            <h2>Latest Updates:</h2>
+            <!-- show chosen file -->
+            <img id="image">
+            <p id="file-submit"></p>
+            <!-- output input -->
+            <h2 class="out-query"><span class="out-query" id="query-output"></span>
+            </h2>
+        </div>
+        <div class="column" id="dash-3">
+            <h2>Collections:</h2>
+        </div>
+        <!-- <div class="column">
+        </div> -->
+    </div>
+</body>
+
+<script>
+    var currentTime = new Date().getTime();
+
+    document.onmousemove = function (event) {
+        currentTime = new Date().getTime();
+    }
+    document.onkeypress = function () {
+        currentTime = new Date().getTime();
+    }
+    function pageRefresh() {
+        if (new Date().getTime() - currentTime >= 600000) {
+            alert("Session expired please login again.");
+            location.href = '/secureLogin.html';
+        } else {
+            setTimeout(pageRefresh, 600000);
+        }
+    }
+    setTimeout(pageRefresh, 1000);
+</script>
+
+<script src="dashboard.js"></script>
+
+</html>
