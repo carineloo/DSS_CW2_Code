@@ -5,10 +5,10 @@
 <!-- file inclusion vulnerability -->
 
 <head>
-    <meta name="viewport" http-equiv="Content-Security-Policy" initial-scale=1" charset="utf-8">
+    <!-- allowing you to define where resources can be loaded from, preventing browsers from loading data from any other locations -->
+    <meta name="viewport" http-equiv="Content-Security-Policy" content="img-src 'self'" content="width=device-width, initial-scale=1" charset="utf-8">
     <link rel="stylesheet" href="style.css">
     <title>Developing Secure System</title>
-
 </head>
 
 <body>
@@ -18,7 +18,7 @@
             <div class="homepage">
                 <h1 class="">Welcome to my space!</h1>
                 <p>
-                    <button onclick="reDir()">Login</button>
+                    <button id="home-btn" onclick="reDir()">Login</button>
                     &nbsp | &nbsp
                     <a href="register.html"> Register</a>
                 </p>
@@ -61,6 +61,17 @@
 
 </body>
 
-<script src="login.js"></script>
+<script>
+    /* 
+        - enfore HTTPS on the client side to prevent MITM attacks
+        - HTTPS encrypts the communication between the server and the client
+        - such as data being transmitted, makes it tougher for the attacker to intercept and read data
+    */
+    // if (window.location.protocol !== 'https:') {
+    //     window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length)
+    // }
+</script>
+
+<script nonce="2726c7f26c" src="login.js"></script>
 
 </html>

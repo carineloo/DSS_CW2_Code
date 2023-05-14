@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const client = require('../databasepg');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const http = require('http');
+
 
 // validates username only allow alphanumeric 
 function checkUsername(username) {
@@ -9,18 +11,44 @@ function checkUsername(username) {
     return pattern.test(username)
 }
 
+
 exports.secureLogin = async (req, res) => {
+
+    // keep track of request made per user, limiting user request made within a specific time period (rate limiting)
+    // prevents brute force attacks by limiting number of requests the attacker can make
+    // attacker will need to use many valid unique usernames to bypass the rate limit - difficult without access to these
 
     const values = req.body;
     const entUsername = values.username;
     const entEmail = values.email;
     const entPassword = values.password;
 
+    const makeRequest = new Map()
+
+    function userRequest(entUsername) {
+        const timeNow = performance.now()
+        const oldRequestTime = makeRequest.get(entUsername)
+
+        // rate is number of requests per second
+        if (oldRequestTime && timeNow - oldRequestTime < 1000) {
+            res.status(500).json({
+                error: "Too many request. Please wait try again in a moment."
+            })
+            return
+        }
+
+        makeRequest.set(entUsername, timeNow)
+        console.log("Making request..." + entUsername + " " + timeNow)
+    }
+
+
     try {
         const data = await client.query(`SELECT * FROM accounts WHERE username = $1;`, [entUsername])
         const user = data.rows;
 
-        // reject different type other than string
+        userRequest(entUsername)
+
+        // reject different type of username other than string (input validation)
         if (typeof entUsername != "string" || typeof entPassword != "string") {
             response.send("Invalid username parameters!")
             return
@@ -29,16 +57,18 @@ exports.secureLogin = async (req, res) => {
         // input validation
         // checks for special characters first, but proceeds with following for extra caution
         if (checkUsername(entUsername)) {
-
             // check if user is registered
             if (user.length === 0) {
+
                 // username doesn't exist: not registered, delay message
-                console.log(user)
+                // console.log(user)
+
                 setTimeout(() => {
                     res.status(400).json({
                         error: "Login Invalid!"
                     })
                 }, 2000)
+
 
                 // check if username has special characters (XSS and SQL injection)
             } else if (checkUsername(entUsername)) {
@@ -117,7 +147,7 @@ exports.secureLogin = async (req, res) => {
                         // });
                         setTimeout(() => {
                             res.redirect('/dashboard.html');
-                        }, 1000)
+                        }, 2000)
                     }
                 })
             }

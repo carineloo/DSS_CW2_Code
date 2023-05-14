@@ -51,14 +51,24 @@
         currentTime = new Date().getTime();
     }
     function pageRefresh() {
-        if (new Date().getTime() - currentTime >= 10000) {
+        //  3 minutes
+        if (new Date().getTime() - currentTime >=  3 * 60 * 1000) {
             alert("Session expired.");
             location.href = '/home.html';
         } else {
-            setTimeout(pageRefresh, 10000);
+            setTimeout(pageRefresh,  3 * 60 * 1000);
         }
     }
     setTimeout(pageRefresh, 1000);
+
+     /* 
+        - enfore HTTPS on the client side to prevent MITM attacks
+        - HTTPS encrypts the communication between the server and the client
+        - such as data being transmitted, makes it tougher for the attacker to intercept and read data
+    */
+    // if (window.location.protocol !== 'https:') {
+    //     window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length)
+    // }
 </script>
 <script type="text/javascript" src="register.js"></script>
 <script type="text/javascript" src="doubleCookies.js"> </script>

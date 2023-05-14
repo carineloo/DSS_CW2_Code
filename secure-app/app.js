@@ -18,10 +18,6 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const myHeaders = new Headers(); // Currently empty
-myHeaders.set("Content-Type", "text/html");
-myHeaders.set("X-Content-Type-Options", "nosniff"); // follow content-type header and should not be changed
-
 client.connect((err) => { // Connected Database
 
     if (err) {
@@ -30,6 +26,53 @@ client.connect((err) => { // Connected Database
         console.log("Data logging initiated!");
     }
 });
+
+/* 
+    - prevent attacks such as DDoS, by limitting no. of requests that can be made from one IP address within a time period.
+    - rate limiting prevents overwhelimg the web server with large no. of requests, potentially crashing it 
+    - once it reaches the rate limit, the attacker can't make anymore requests, and the rate limit resets
+*/
+const rateLimit = require("express-rate-limit");
+// middleware to limit the number of requests from each IP address
+
+const limiter = rateLimit({
+    // up to 100 requests every 15 minutes for each ip address
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Request limit has reached, please try again.'
+});
+
+// rate limiting applied to all the routes
+app.use(limiter);
+
+// file incursion
+// intrusion detection system
+
+
+// const net = require('net');
+
+// // Define the port to listen on
+
+// // Create a server
+// const server = net((socket) => {
+//   console.log('Client connected');
+
+//   // Handle incoming data
+//   socket.on('data', (data) => {
+//     console.log(`Received data: ${data}`);
+
+//     // Check for signs of an attack
+//     if (data.includes('DROP TABLE')) {
+//       console.log('Possible SQL injection detected!');
+//     }
+//   });
+
+//   // Handle disconnects
+//   socket.on('end', () => {
+//     console.log('Client disconnected');
+//   });
+// });
+
 
 app.get('/users', (req, res) => {
     client.query(`SELECT * FROM accounts`, (err, result) => {

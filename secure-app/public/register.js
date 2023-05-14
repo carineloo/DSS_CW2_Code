@@ -14,7 +14,7 @@ function checkUsername(username) {
 // validates email
 function checkEmail(email) {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return pattern.test(email) // in-built js method to check if string matches regex
+    return pattern.test(email) // built-in js method to check if string matches regex
 }
 
 // validates password only allow alphanumeric 
@@ -24,26 +24,27 @@ function checkPassword(password) {
 }
 
 // accoum enum: generic error message, delay error message //
-// content type header 
 // add function to check password // 
 // session hijacking: session time out //
 // token for each user (extra?)
-// Privacy
+// SQL: parameterised query and input validation //
+// sanitise emails: not case sensitive. keeping it all lowercase is best practice - decrease the chance of running into issues or causing confusion.
+// rate limiting //
 // login, direct to a page... to show use inputs //
+// https for MITM attack //
 
 /** xss **/
 
 exports.register = async (req, res) => {
-
 
     const values = req.body;
     const newEmail = values.email;
     const newUsername = values.username;
     const newPassword = values.password;
 
-    console.log(newEmail);
-    console.log(newUsername);
-    console.log(newPassword);
+    // console.log(newEmail);
+    // console.log(newUsername);
+    // console.log(newPassword);
 
     if (!newEmail || !newUsername || !newPassword) {
         // errors.push({ message: "Please enter all fields" });
@@ -82,7 +83,7 @@ exports.register = async (req, res) => {
                     // console.log("Valid name");
                 } else {
                     return res.status(400).json({
-                        error: "Password should have 7 - 10 characters, at least one uppercase letter, one lowercase letter, one number and one special character.",
+                        error: "Password should have 8 - 16 characters, at least one uppercase letter, one lowercase letter, one number and one special character.",
                     });
                 }
 
@@ -93,9 +94,11 @@ exports.register = async (req, res) => {
                         });
                     console.log(hash);
 
+                    const sanitisedEmail = newEmail.toLowerCase()
+
                     const user = {
                         newUsername,
-                        newEmail,
+                        newEmail: sanitisedEmail,
                         newPassword: hash
                     };
 
@@ -121,7 +124,7 @@ exports.register = async (req, res) => {
                     })
 
                     if (flag) {
-                        console.log(token);
+                        console.log("Token created.");
                     }
                 })
             }
