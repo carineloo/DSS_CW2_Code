@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Password Reset</title>
+
+</head>
+
+<body>
+    <div class="section-2">
+        <div class="content">
+            <h1 class="">Change Password:</h1>
+            <!-- form -->
+            <form id="changepw-form" method="POST" action="/user/changePW" novalidate>
+                <label for="username">Username:</label>
+                <input type="username" name="username" id="username" placeholder="username" required>
+                <label for="old_password">Old password:</label>
+                <input type="password" name="old_password" id="old-password" placeholder="old password" required>
+                <label for="new_password">New password:</label>
+                <input type="password" name="new_password" id="new-password" placeholder="new password" required>
+                <label for="confirm_password">Confirm new password:</label>
+                <input type="password" name="confirm_password" id="confirm-password" placeholder="confirm password"
+                    required>
+                <button type="submit" value="change">Confirm</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    var currentTime = new Date().getTime();
+
+    document.onmousemove = function (event) {
+        currentTime = new Date().getTime();
+    }
+    document.onkeypress = function () {
+        currentTime = new Date().getTime();
+    }
+    function pageRefresh() {
+        // 10 minutes
+        if (new Date().getTime() - currentTime >= 10 * 60 * 1000) {
+            alert("Session expired please login again.");
+            location.href = '/secureLogin.html';
+        } else {
+            setTimeout(pageRefresh, 10 * 60 * 1000);
+        }
+    }
+    setTimeout(pageRefresh, 1000);
+
+    /*
+       - enfore HTTPS on the client side to prevent MITM attacks
+       - HTTPS encrypts the communication between the server and the client
+       - such as data being transmitted, makes it tougher for the attacker to intercept and read data
+   */
+    // if (window.location.protocol !== 'https:') {
+    //     window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length)
+    // }
+</script>
+
+<script src="changePW.js"></script>
+
+</html>

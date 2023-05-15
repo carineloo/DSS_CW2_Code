@@ -26,11 +26,11 @@ function checkPassword(password) {
 // accoum enum: generic error message, delay error message //
 // add function to check password // 
 // session hijacking: session time out //
-// token for each user (extra?)
 // SQL: parameterised query and input validation //
-// sanitise emails: not case sensitive. keeping it all lowercase is best practice - decrease the chance of running into issues or causing confusion.
+// sanitise emails: not case sensitive. keeping it all lowercase is best practice - decrease the chance of running into issues or causing confusion. modifies input to ensure a valid format before inserting to database.
+// login, redirect to a secureLogin... to show user inputs //
 // rate limiting //
-// login, direct to a page... to show use inputs //
+// token for each user (extra?) check if token exists in db
 // https for MITM attack //
 
 /** xss **/
@@ -47,53 +47,61 @@ exports.register = async (req, res) => {
     // console.log(newPassword);
 
     if (!newEmail || !newUsername || !newPassword) {
-        // errors.push({ message: "Please enter all fields" });
-        return res.status(400).json({
-            error: "Please enter all fields.",
-        });
-    }
-
-    else {
+        setTimeout(() => {
+            res.status(400).json({
+                error: "Please enter all fields.",
+            })
+        }, 2000)
+    } else {
         try {
             const data = await client.query(`SELECT * FROM accounts WHERE email = $1`, [newEmail]);
             const arr = data.rows;
             if (arr.length != 0) {
-                return res.status(400).json({
-                    // check if taken
-                    error: "Invalid Email.",
-                });
+                setTimeout(() => {
+                    res.status(400).json({
+                        error: "Invalid Email."
+                    })
+                }, 2000)
             }
             else {
                 if (checkEmail(newEmail)) {
                     // console.log("Valid email address");
                 } else {
                     // console.log("Invalid email address");
-                    return res.status(400).json({
-                        error: "Invalid email address format.",
-                    });
+                    setTimeout(() => {
+                        res.status(400).json({
+                            error: "Invalid email address format.",
+                        })
+                    }, 2000)
                 }
                 if (checkUsername(newUsername)) {
                     // console.log("Valid name");
                 } else {
-                    return res.status(400).json({
-                        error: "Username should only have alphanumeric characters.",
-                    });
+                    setTimeout(() => {
+                        res.status(400).json({
+                            error: "Username should only have alphanumeric characters.",
+                        })
+                    }, 2000)
                 }
                 if (checkPassword(newPassword)) {
                     // console.log("Valid name");
                 } else {
-                    return res.status(400).json({
-                        error: "Password should have 8 - 16 characters, at least one uppercase letter, one lowercase letter, one number and one special character.",
-                    });
+                    setTimeout(() => {
+                        res.status(400).json({
+                            error: "Password should have 8 - 16 characters, at least one uppercase letter, one lowercase letter, one number and one special character."
+                        })
+                    }, 2000)
                 }
 
                 bcrypt.hash(newPassword, 10, (err, hash) => {
                     if (err)
-                        res.status(err).json({
-                            error: "Server error",
-                        });
-                    console.log(hash);
+                        setTimeout(() => {
+                            res.status(err).json({
+                                error: "Server error"
+                            })
+                        }, 2000)
 
+                    // put to lower case prevent confusion
                     const sanitisedEmail = newEmail.toLowerCase()
 
                     const user = {
@@ -111,29 +119,32 @@ exports.register = async (req, res) => {
                         if (err) {
                             flag = 0;
                             console.error(err);
-                            return res.status(500).json({
-                                // check if taken
-                                error: "Database Error. Username Invalid."
-                            })
+                            setTimeout(() => {
+                                res.status(err).json({
+                                    // check if taken
+                                    error: "Database Error. Username Invalid."
+                                })
+                            }, 2000)
                         }
-                        else {
+                        else { // success
                             flag = 1;
-                            //res.status(200).send({message: 'User added to database, not verified'});
                             res.redirect('/secureLogin.html');
                         }
                     })
-
+                    // success
                     if (flag) {
                         console.log("Token created.");
                     }
                 })
             }
         }
-        catch (error) {
-            console.log(error);
-            res.status(500).json({
-                error: "Database error while registring user!",
-            });
-        };
+        catch (err) {
+            console.log(err);
+            setTimeout(() => {
+                res.status(500).json({
+                    error: "Database error occurred while signing in!",
+                });
+            }, 2000)
+        }
     }
 }

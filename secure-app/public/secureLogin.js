@@ -2,8 +2,6 @@ const bcrypt = require('bcrypt');
 const client = require('../databasepg');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const http = require('http');
-
 
 // validates username only allow alphanumeric 
 function checkUsername(username) {
@@ -11,18 +9,29 @@ function checkUsername(username) {
     return pattern.test(username)
 }
 
+// insert no values function check
 
 exports.secureLogin = async (req, res) => {
-
-    // keep track of request made per user, limiting user request made within a specific time period (rate limiting)
-    // prevents brute force attacks by limiting number of requests the attacker can make
-    // attacker will need to use many valid unique usernames to bypass the rate limit - difficult without access to these
 
     const values = req.body;
     const entUsername = values.username;
     const entEmail = values.email;
     const entPassword = values.password;
 
+    // check for any empty fields
+    if (!entUsername || !entEmail || !entPassword) {
+        setTimeout(() => {
+            res.status(400).json({
+                error: "Please enter all fields.",
+            })
+        }, 2000)
+    }
+
+    /* 
+        - keep track of request made per user, limiting user request made within a specific time period (rate limiting
+        - prevents brute force attacks by limiting number of requests the attacker can make
+        - attacker will need to use many valid unique usernames to bypass the rate limit - difficult without access to these
+    */
     const makeRequest = new Map()
 
     function userRequest(entUsername) {
@@ -31,20 +40,29 @@ exports.secureLogin = async (req, res) => {
 
         // rate is number of requests per second
         if (oldRequestTime && timeNow - oldRequestTime < 1000) {
-            res.status(500).json({
-                error: "Too many request. Please wait try again in a moment."
-            })
-            return
+            setTimeout(() => {
+                res.status(500).json({
+                    error: "Too many request. Please wait and try again in a moment."
+                })
+            }, 2000)
         }
 
         makeRequest.set(entUsername, timeNow)
         console.log("Making request..." + entUsername + " " + timeNow)
     }
 
-
     try {
         const data = await client.query(`SELECT * FROM accounts WHERE username = $1;`, [entUsername])
         const user = data.rows;
+
+        // check if token exists in database. token was made when registering, so will be hard for attackers to fake.
+        if (user[0].token == null) {
+            setTimeout(() => {
+                res.status(500).json({
+                    error: "Database error. Cannot identify user."
+                })
+            }, 2000)
+        }
 
         userRequest(entUsername)
 
@@ -59,27 +77,21 @@ exports.secureLogin = async (req, res) => {
         if (checkUsername(entUsername)) {
             // check if user is registered
             if (user.length === 0) {
-
-                // username doesn't exist: not registered, delay message
-                // console.log(user)
-
                 setTimeout(() => {
                     res.status(400).json({
                         error: "Login Invalid!"
                     })
                 }, 2000)
-
-
                 // check if username has special characters (XSS and SQL injection)
             } else if (checkUsername(entUsername)) {
                 bcrypt.compare(entPassword, user[0].password, (err, result) => {
-                    /***
+                    /*
                         - prevent SQL injection with parameterised query
                         - these are prepared statements define in the SQL
                         - allows the database to recognise SQL query from all user input
                         - meaning each placeholder reads all inputs merely as values
                         - if it is an illegal input or doesn't match the database, it will be false
-                    ***/
+                    */
                     if (entUsername && entPassword) {
                         console.log("Queries Examples:")
                         // select statement
@@ -136,18 +148,14 @@ exports.secureLogin = async (req, res) => {
                         }, 2000)
 
                     } else if (entUsername && !entPassword) {
-                        res.status(400).json({
-                            error: "Please enter password!"
-                        })
+                        setTimeout(() => {
+                            res.status(400).json({
+                                error: "Please enter password!"
+                            })
+                        }, 2000)
                     } else if (result = true) { // success 
                         const token = jwt.sign({ entUsername: entUsername }, process.env.SECRET_KEY);
-                        // res.status(200).json({
-                        //     message: "User signed in",
-                        //     token: token,
-                        // });
-                        setTimeout(() => {
-                            res.redirect('/dashboard.html');
-                        }, 2000)
+                        res.redirect('/dashboard.html');
                     }
                 })
             }
@@ -165,7 +173,7 @@ exports.secureLogin = async (req, res) => {
                 error: "Database error occurred while signing in!",
             });
         }, 2000)
-    };
+    }
 }
 
 /*** (<--- paremeterised queries to prevent sql injection --->)
