@@ -35,7 +35,9 @@
 
                 <p class="error-message" id="error-message"></p>
 
-                <button id="register-btn" type="submit" value="Register" onclick="submitForm()">Register!</button>
+                <button id="register-btn" type="submit" value="Register" onclick="performChecks()">Register!</button>
+            
+                <p id="show-loading"></p>
             </form>
         </div>
     </div>
@@ -69,6 +71,7 @@
     // if (window.location.protocol !== 'https:') {
     //     window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length)
     // }
+
 </script>
 <script type="text/javascript" src="register.js"></script>
 <script type="text/javascript" src="doubleCookies.js"> </script>

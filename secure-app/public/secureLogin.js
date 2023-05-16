@@ -2,6 +2,9 @@ const bcrypt = require('bcrypt');
 const client = require('../databasepg');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const http = require('http');
+const server = require('../app')
+
 
 // validates username only allow alphanumeric 
 function checkUsername(username) {
@@ -19,7 +22,7 @@ exports.secureLogin = async (req, res) => {
     const entPassword = values.password;
 
     // check for any empty fields
-    if (!entUsername || !entEmail || !entPassword) {
+    if (!entUsername || !entPassword) {
         setTimeout(() => {
             res.status(400).json({
                 error: "Please enter all fields.",
@@ -154,8 +157,30 @@ exports.secureLogin = async (req, res) => {
                             })
                         }, 2000)
                     } else if (result = true) { // success 
-                        const token = jwt.sign({ entUsername: entUsername }, process.env.SECRET_KEY);
-                        res.redirect('/dashboard.html');
+                        //const token = jwt.sign({ entUsername: entUsername }, process.env.SECRET_KEY);
+                        //res.redirect('/dashboard.html');
+                        //const token = jwt.sign({ entUsername: entUsername }, process.env.SECRET_KEY);
+                        // res.status(200).json({
+                        //     message: "User signed in",
+                        //     token: token,
+                        // });
+                        client.query(`SELECT * FROM accounts WHERE username = $1`, [entUsername], (err, result) => {
+                            resultRow = result.rows
+                            tokenRow = resultRow[0].token
+                            console.log("Token is " + tokenRow);
+                            const userData = {
+                                username: entUsername,
+                            }
+
+                            server.createSession(tokenRow, userData)
+                            res.cookie('sessionID', server.sessions[tokenRow].id)
+                            console.log("Cookie: " + res.get('Set-Cookie'))
+
+                            setTimeout(() => {
+                                res.redirect('/validate.html');
+                            }, 2000)
+                        })
+                        
                     }
                 })
             }

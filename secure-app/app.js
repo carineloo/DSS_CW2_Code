@@ -3,6 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const path = require('path');
 const user = require("./routes/users");
+const speakeasy = require('speakeasy')
+const qrcode = require('qrcode')
+const cookieParser = require('cookie-parser');
 
 require("dotenv").config();
 
@@ -12,11 +15,38 @@ const PORT = 3003
 
 // create express app
 const app = express();
+
+let sessions = {};
+
+
+function createSession(userToken, userData){
+    const sessionID = userToken
+    const session = {
+        id: sessionID,
+        user: userData,
+        createdAt: new Date(),
+    };
+
+    sessions[sessionID] = session
+    return sessions
+}
+
+function getSession(sessionID) {
+    return sessions[sessionID]
+}
+
+exports.createSession = createSession
+exports.getSession = getSession
+exports.sessions = sessions
+
 app.use(express.json())
 
 // setup middlewares route
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(cookieParser());
+
+
 
 client.connect((err) => { // Connected Database
 
@@ -87,5 +117,26 @@ app.get('/users', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/user', user);
+
+const secret = speakeasy.generateSecret({length:20});
+const tempSecret = secret.base32
+console.log("Secret = " + tempSecret)
+app.set('secret2fa', tempSecret);
+
+const qrUrl = speakeasy.otpauthURL({
+    secret: tempSecret,
+    label: 'Authentication App',
+    issuer: 'The Safest Company',
+    encoding: 'base32',
+});
+
+qrcode.toFile('public/img/qrcode.png', qrUrl, (err, dataURL) =>{
+if(err){
+    console.error(err);
+    return;
+}
+// console.log(dataURL)
+})
+
 
 app.listen(PORT, () => console.log("Server is now listening at PORT " + PORT));

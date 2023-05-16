@@ -25,7 +25,16 @@ exports.changePW = async (req, res) => {
         const user = data.rows;
 
         // check if password entered and old registered password matches
+        bcrypt.compare(oldPw, user[0].password), (err, result) =>{
+            if(result){
+                console.log("Same pass")
+            }else{
+                console.log("Wrong pass")
+            }
+        }
+        /*
         const verified = bcrypt.compare(oldPw, user[0].password)
+        console.log("Same password? " + verified)
         if (verified) {
             // check if new pw is same as old
             if (confirmPw === oldPw) {
@@ -63,6 +72,7 @@ exports.changePW = async (req, res) => {
                 })
             }, 2000)
         }
+        */
     } catch (err) {
         console.log(err);
         setTimeout(() => {
