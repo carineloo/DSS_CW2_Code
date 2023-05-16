@@ -58,7 +58,7 @@ client.connect((err) => { // Connected Database
 });
 
 /* 
-    - prevent attacks such as DDoS, by limitting no. of requests that can be made from one IP address within a time period.
+    - prevent attacks such as DDoS which floods a server to prevent users from accessing the website, by limiting no. of requests that can be made from one IP address within a time period.
     - rate limiting prevents overwhelimg the web server with large no. of requests, potentially crashing it 
     - once it reaches the rate limit, the attacker can't make anymore requests, and the rate limit resets
 */

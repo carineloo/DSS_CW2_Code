@@ -7,7 +7,7 @@ const server = require('../app')
 
 /** xss **/
 
-// validates username only allow alphanumeric 
+// validates username only allow alphanumeric characters
 function checkUsername(username) {
     const pattern = /^[a-zA-Z0-9]+$/;
     return pattern.test(username)
@@ -24,15 +24,10 @@ function checkPassword(password) {
     const pattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,16}$/g;
     return pattern.test(password)
 }
+exports.checkUsername = checkUsername
+exports.checkEmail = checkEmail
+exports.checkPassword = checkPassword
 
-// accoum enum: generic error message, delay error message //
-// add function to check password // 
-// session hijacking: session time out //
-// SQL: parameterised query and input validation //
-// sanitise emails: not case sensitive. keeping it all lowercase is best practice - decrease the chance of running into issues or causing confusion. modifies input to ensure a valid format before inserting to database.
-// login, redirect to a secureLogin... to show user inputs //
-// rate limiting //
-// token for each user (extra?) check if token exists in db
 // https for MITM attack //
 
 /** xss **/

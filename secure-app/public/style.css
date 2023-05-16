@@ -292,7 +292,7 @@ a:hover {
     max-width: 350px;
   }
 
-/* images */
+/* ------------- images in dashboard ------------- */
 
 .row {
     display: flex;
@@ -330,4 +330,14 @@ a:hover {
         flex: 100%;
         max-width: 100%;
     }
+}
+
+
+/* ------------- changepw ------------- */
+/* this is in secureLogin.html */
+#changepw {
+    font-size: 16px;
+    margin: 10px;
+    color: brown;
+    text-decoration: underline;
 }

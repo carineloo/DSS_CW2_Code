@@ -16,7 +16,7 @@
     <div class="section">
         <div class="content">
             <h1 class="title-search">Make a post!</h1>
-            
+
             <!-- form -->
             <form class="form" id="form-id" autocomplete="off">
                 <!-- input -->
@@ -64,17 +64,30 @@
     }
     function pageRefresh() {
         // 10 minutes
-        if (new Date().getTime() - currentTime >= 10 * 60 * 1000) {
-            alert("Session expired please login again.");
-            location.href = '/secureLogin.html';
+        // const time = 10 * 60 * 1000
+       
+        // if (new Date().getTime() - currentTime >= time) {
+        //     alert("Session expired please login again.");
+        //     location.href = '/secureLogin.html';
+        // } else {
+        //     setTimeout(pageRefresh, 10 * 60 * 1000);
+        // }
+
+        // test statement
+
+        const testTime = 2000
+        
+        if (new Date().getTime() - currentTime >= testTime) {
+            console.log("Timed. No activity detected.");
+            console.log("Function PASSED.");
         } else {
-            setTimeout(pageRefresh, 10 * 60 * 1000);
+            setTimeout(pageRefresh, testTime);
         }
     }
     setTimeout(pageRefresh, 1000);
 
      /* 
-        - enfore HTTPS on the client side to prevent MITM attacks
+        - enfore HTTPS on the client side to prevent MITM attacks (impersonating the communication between server and client)
         - HTTPS encrypts the communication between the server and the client
         - such as data being transmitted, makes it tougher for the attacker to intercept and read data
     */

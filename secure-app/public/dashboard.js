@@ -29,8 +29,6 @@ function fileSubmit() {
     } else {
         document.getElementById("file-submit").innerHTML = "No file selected."
     }
-
-
 }
 
 const file = document.querySelector("#file") // input
@@ -51,10 +49,16 @@ const output = document.getElementById("query-output")
 
 // replace all characters with their html entity equivalent
 const encodeHTML = str => str.replace(/[\u00A0-\u9999<>\&]/gim, (i) => `&#${i.charCodeAt(0)};`);
-
 function getInputValue() {
     output.innerHTML = encodeHTML(text.value)
     console.log(output.innerHTML)
+
+    if (output.innerHTML.includes("&lt;")) {
+        console.log("Test for " + "<" + " located and encoded. PASSED")
+    } 
+    if (output.innerHTML.includes("&gt;")) {
+        console.log("Test for " + ">" + " located and encoded. PASSED")
+    } 
 }
 
 // when click shows input
