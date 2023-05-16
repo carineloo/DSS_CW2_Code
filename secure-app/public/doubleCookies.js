@@ -82,6 +82,13 @@ function stopRefresh2() {
     })
 }
 
+function stopRefresh3() {
+    const formLogin = document.getElementById("changepw-form")
+    formLogin.addEventListener('submit', (e) => {
+        e.preventDefault();
+    })
+}
+
 function performChecks() {
     const regUsername = document.getElementById("username").value
     const regEmail = document.getElementById("email").value
@@ -116,6 +123,27 @@ function performChecksLogin() {
     } else if (!checkUsername(logUsername)) {
         alert("Username should only have alphanumeric characters!")
         stopRefresh2()
+    } else {
+        submitForm()
+    }
+}
+
+function performChecksPWCheck() {
+    const PWUsername = document.getElementById("username").value
+    const old_password = document.getElementById("old-password").value
+    const new_password = document.getElementById("new-password").value
+    const confirm_password = document.getElementById("confirm-password").value
+
+    // check for any empty fields
+    if (!PWUsername || !old_password || new_password || confirm_password) {
+        alert("Please enter all fields.")
+        stopRefresh3()
+    } else if (!checkUsername(PWUsername)) {
+        alert("Username should only have alphanumeric characters!")
+        stopRefresh3()
+    } else if (!checkPassword(new_password)) {
+        alert("Password should have 8 - 16 characters, at least one uppercase letter, one lowercase letter, one number and one special character.")
+        stopRefresh()
     } else {
         submitForm()
     }
