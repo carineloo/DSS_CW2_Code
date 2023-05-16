@@ -165,8 +165,8 @@ exports.secureLogin = async (req, res) => {
                         //     token: token,
                         // });
                         client.query(`SELECT * FROM accounts WHERE username = $1`, [entUsername], (err, result) => {
-                            resultRow = result.rows
-                            tokenRow = resultRow[0].token
+                            const resultRow = result.rows
+                            const tokenRow = resultRow[0].token
                             console.log("Token is " + tokenRow);
                             const userData = {
                                 username: entUsername,

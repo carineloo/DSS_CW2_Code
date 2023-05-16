@@ -25,54 +25,33 @@ exports.changePW = async (req, res) => {
         const user = data.rows;
 
         // check if password entered and old registered password matches
-        bcrypt.compare(oldPw, user[0].password), (err, result) =>{
+        bcrypt.compare(oldPw, user[0].password,(err, result) =>{
             if(result){
                 console.log("Same pass")
+                if (oldPw === newPw){
+                    setTimeout(() => {
+                        res.status(400).json({
+                            error: "New password cannot be the same as old password."
+                        })
+                    }, 2000)
+                } else if (confirmPw != newPw){
+                    console.log("Confirmed passwords dont match")
+                } else if (confirmPw === newPw){
+                    bcrypt.hash(confirmPw, 10, (err, hash) =>{
+                        client.query(`UPDATE accounts SET password = $2 WHERE username = $1`, [username, hash], function (e, results) {
+                            if (err) {
+                                console.log("Failed to update password " + e)
+                                return
+                            }
+                        })
+                        console.log("Password change success.")
+                        res.redirect('/dashboard.html');
+                    })
+                }
             }else{
                 console.log("Wrong pass")
             }
-        }
-        /*
-        const verified = bcrypt.compare(oldPw, user[0].password)
-        console.log("Same password? " + verified)
-        if (verified) {
-            // check if new pw is same as old
-            if (confirmPw === oldPw) {
-                setTimeout(() => {
-                    res.status(400).json({
-                        error: "New password cannot be the same as old password."
-                    })
-                }, 2000)
-            }
-            // check if confirm password is the same
-            else if (confirmPw === newPw) {
-                bcrypt.hash(confirmPw, 10, (err, hash) => {
-                    // update changing password
-                    client.query(`UPDATE accounts SET password = $2 WHERE username = $1`, [username, hash], function (e, results) {
-                        if (err) {
-                            console.log("Failed to update password " + e)
-                            return
-                        }
-                    })
-                    console.log("Password change success.")
-                    res.redirect('/dashboard.html');
-                })
-            }
-            else {
-                setTimeout(() => {
-                    res.status(400).json({
-                        error: "New passwords don't match."
-                    })
-                }, 2000)
-            }
-        } else {
-            setTimeout(() => {
-                res.status(400).json({
-                    error: "Old password incorrect."
-                })
-            }, 2000)
-        }
-        */
+        })
     } catch (err) {
         console.log(err);
         setTimeout(() => {

@@ -69,26 +69,31 @@ function checkPassword(password) {
     return pattern.test(password)
 }
 
-function performChecks() {
+function stopRefresh() {
     const form = document.getElementById("register-form")
 
     form.addEventListener('submit', (e) => {
         e.preventDefault(); 
     })
+}
 
+function performChecks() {
     const regUsername = document.getElementById("username").value
     const regEmail = document.getElementById("email").value
     const regPassword = document.getElementById("password").value
 
     if (!regUsername || !regEmail || !regPassword) {
         alert("Please enter all fields.")
-       
+        stopRefresh()
     } else if (!checkUsername(regUsername)) {
         alert("Username should only have alphanumeric characters!.")
+        stopRefresh()
     } else if (!checkEmail(regEmail)) {
         alert("Email is in incorrect format.")
+        stopRefresh()
     } else if (!checkPassword(regPassword)) {
         alert("Password should have 8 - 16 characters, at least one uppercase letter, one lowercase letter, one number and one special character.")
+        stopRefresh()
     } else {
         submitForm()
     }
