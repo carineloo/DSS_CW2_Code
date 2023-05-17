@@ -1,5 +1,3 @@
-// const client = require('../databasepg');
-
 // validates input (looks for special characters)
 function checkInput(input) {
     const pattern = /[!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/
@@ -14,6 +12,7 @@ function input() {
     }
 }
 
+// file inclusion
 function fileSubmit() {
     const file = document.getElementById("file").value
     // remove file path
@@ -31,6 +30,7 @@ function fileSubmit() {
     }
 }
 
+// get file
 const file = document.querySelector("#file") // input
 
 file.addEventListener("change", function () {
@@ -69,31 +69,3 @@ const form = document.getElementById("form-id")
 form.addEventListener('submit', (e) => {
     e.preventDefault();
 })
-
-/* 
-XSS:
-1.
-- encode data on output
-- using html entities
-- used sanitization in order to convert the user input from HTML into a normal string by escaping all HTML specific characters.
-*/
-
-// exports.dashboard = async (req, res) => {
-
-//     try {
-//         const data = client.query(`SELECT * FROM accounts WHERE username = $1;`, [entUsername])
-//         const user = data.rows;
-
-//         const usernmame = user[0].username
-//         res.render('dashboard', {usernmame});
-
-
-//     } catch (err) {
-//         console.log(err);
-//         setTimeout(() => {
-//             res.status(500).json({
-//                 error: "Database error occurred while signing in!",
-//             });
-//         }, 2000)
-//     };
-// }

@@ -48,8 +48,11 @@ exports.secureLogin = async (req, res) => {
             return
         }
 
-        // input validation
-        // checks for special characters first, but proceeds with following for extra caution
+        /* 
+            - input validation
+            - checks for special characters first, but proceeds with following for extra caution
+        */
+
         // check if user is registered
         if (user.length === 0) {
             setTimeout(() => {
@@ -60,7 +63,7 @@ exports.secureLogin = async (req, res) => {
 
             // check if username has special characters (XSS and SQL injection)
         } else {
-            // check if token exists in database. token was made when registering, so will be hard for attackers to fake.
+            // check if token exists in database
             if (!user[0].token) {
                 setTimeout(() => {
                     res.status(500).json({
@@ -138,7 +141,6 @@ exports.secureLogin = async (req, res) => {
                         const userData = {
                             username: entUsername,
                         }
-
                         server.createSession(tokenRow, userData)
                         res.cookie('sessionID', server.sessions[tokenRow].id)
                         console.log("Cookie: " + res.get('Set-Cookie'))

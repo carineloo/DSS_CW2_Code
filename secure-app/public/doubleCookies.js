@@ -5,7 +5,6 @@
     - prevents duplicate form submission and ensure data is not overwritten
 */
 
-
 // sets a cookie with the given name and value
 function setCookie(name, value) {
     document.cookie = name + "=" + value + "; path=/";
@@ -47,10 +46,6 @@ function getCookie(name) {
     }
 }
 
-// function getCookie(name) {
-//     const regex = new RegExp(`(?:(?:^|.*;\\s*)${name}\\s*\\=\\s*([^;]*).*$)|^.*$`);
-//     return document.cookie.replace(regex, '$1');
-// }
 // validates username only allow alphanumeric 
 function checkUsername(username) {
     const pattern = /^[a-zA-Z0-9]+$/;
@@ -60,7 +55,8 @@ function checkUsername(username) {
 // validates email
 function checkEmail(email) {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return pattern.test(email) // built-in js method to check if string matches regex
+    return pattern.test(email) 
+    // built-in js method to check if string matches regex
 }
 
 // validates password 
@@ -75,6 +71,7 @@ function stopRefresh() {
         e.preventDefault();
     })
 }
+
 function stopRefresh2() {
     const formLogin = document.getElementById("login-form")
     formLogin.addEventListener('submit', (e) => {
@@ -89,6 +86,7 @@ function stopRefresh3() {
     })
 }
 
+// submit in register
 function performChecks() {
     const regUsername = document.getElementById("username").value
     const regEmail = document.getElementById("email").value
@@ -112,6 +110,7 @@ function performChecks() {
     }
 }
 
+// submit in login
 function performChecksLogin() {
     const logUsername = document.getElementById("username").value
     const logPassword = document.getElementById("password").value
@@ -128,6 +127,7 @@ function performChecksLogin() {
     }
 }
 
+// submit in change password
 function performChecksPWCheck() {
     const PWUsername = document.getElementById("username").value
     const old_password = document.getElementById("old-password").value
@@ -169,4 +169,8 @@ function submitForm() {
         console.log("Cookies Verification Failed. " + getToken)
     }
 }
+
+exports.checkEmail = checkEmail
+exports.checkUsername = checkUsername
+exports.checkPassword = checkPassword
 

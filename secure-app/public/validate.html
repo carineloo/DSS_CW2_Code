@@ -4,48 +4,24 @@
 <head>
     <meta name="viewport" http-equiv="Content-Security-Policy" initial-scale=1" charset="utf-8">
     <link rel="stylesheet" href="style.css">
-    <title>Dashboard</title>
-
+    <title>Validate - Login</title>
 </head>
 
 
-
 <body>
-    <form id="2fa-form" method="post" action="/user/validate" novalidate>
-        <input type="hidden" id="csrf_token" name="_csrf" value="">
+    <div class="section-2">
+        <div class="content">
+            <form id="2fa-form" class="auth-form" method="post" action="/user/validate" novalidate>
+                <input type="hidden" id="csrf_token" name="_csrf" value="">
 
-        <label for="otp">One Time Password:</label>
-        <input type="text" name="otp" id="otp" placeholder="Enter otp from app" required>
+                <label for="otp">One Time Password:</label>
+                <input type="text" name="otp" id="otp" placeholder="Enter otp from app." required>
 
-        <p class="error-message" id="error-message"></p>
-
-        <button id="submit-otp-btn" type="submit" value="Validate" onclick="submitOTP()">Verify!</button>
-    </form>
-        
-
+                <button class="val-btn" id="submit-otp-btn" type="submit" value="Validate" onclick="submitOTP()">Validate!</button>
+            </form>
+        </div>
+    </div>
 </body>
-
-<script>
-    var currentTime = new Date().getTime();
-
-    document.onmousemove = function (event) {
-        currentTime = new Date().getTime();
-    }
-    document.onkeypress = function () {
-        currentTime = new Date().getTime();
-    }
-    function pageRefresh() {
-        if (new Date().getTime() - currentTime >= 600000) {
-            alert("Session expired please login again.");
-            location.href = '/secureLogin.html';
-        } else {
-            setTimeout(pageRefresh, 600000);
-        }
-    }
-    setTimeout(pageRefresh, 1000);
-
-    
-</script>
 
 <script src="validate.js"></script>
 

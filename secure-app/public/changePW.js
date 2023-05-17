@@ -28,7 +28,7 @@ exports.changePW = async (req, res) => {
                     error: "Login Invalid!"
                 })
             }, 2000)
-            
+
             // check if password entered and old registered password matches
             bcrypt.compare(oldPw, user[0].password, (err, result) => {
                 if (result) {

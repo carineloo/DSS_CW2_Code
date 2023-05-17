@@ -24,6 +24,7 @@ function checkPassword(password) {
     const pattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,16}$/g;
     return pattern.test(password)
 }
+
 exports.checkUsername = checkUsername
 exports.checkEmail = checkEmail
 exports.checkPassword = checkPassword
