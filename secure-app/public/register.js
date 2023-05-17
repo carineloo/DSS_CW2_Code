@@ -75,7 +75,7 @@ exports.register = async (req, res) => {
                 client.query(`INSERT INTO accounts (username, email, password, token) VALUES ($1, $2, $3, $4);`, [user.newUsername, cipherEmail, user.newPassword, token], (err) => {
                     if (err) {
                         flag = 0;
-                        console.error(err);
+                        //console.error(err);
                         setTimeout(() => {
                             res.status(err).json({
                                 // check if taken
@@ -93,7 +93,7 @@ exports.register = async (req, res) => {
     
                         server.createSession(token, userData)
                         res.cookie('sessionID', server.sessions[token].id)
-                        console.log("Cookie: " + res.get('Set-Cookie'))
+                        //console.log("Cookie: " + res.get('Set-Cookie'))
                         res.redirect('/verify.html');
                     }
                 })

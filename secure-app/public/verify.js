@@ -31,10 +31,12 @@ exports.verify = async (req, res) => {
   if(verified)
   {
     const cookieID = req.cookies.sessionID
+    const cipherSpecial = CryptoJS.AES.encrypt(secret2fa, process.env.ENCRYPTION_SECRET_KEY).toString();
+    console.log("Encrypted secret" + cipherSpecial)
     console.log("Verified!")
     client.query(`UPDATE accounts 
                   SET special = $1
-                  WHERE token = $2;`, [secret2fa, cookieID], (err) => {
+                  WHERE token = $2;`, [cipherSpecial, cookieID], (err) => {
       
       res.redirect('/secureLogin.html');
       

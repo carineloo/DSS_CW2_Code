@@ -139,3 +139,5 @@ if(err){
 
 
 app.listen(PORT, () => console.log("Server is now listening at PORT " + PORT));
+
+module.exports = app;

@@ -61,9 +61,13 @@ function checkEmail(email) {
 
 // validates password 
 function checkPassword(password) {
-    const pattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,16}$/g;
+    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z0-9!@#$%^&*]).{8,}$/;
     return pattern.test(password)
 }
+
+exports.checkUsername = checkUsername
+exports.checkEmail = checkEmail
+exports.checkPassword = checkPassword
 
 function stopRefresh() {
     const form = document.getElementById("register-form")

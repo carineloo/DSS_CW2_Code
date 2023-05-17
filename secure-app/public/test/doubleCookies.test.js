@@ -17,7 +17,7 @@ describe('Testing email checks', function() {
 });
 
 describe('Testing username checks', function() {
-    it("Testing only alphanumeric characters", () => {
+    it("Testing only alpha numeric characters", () => {
         const outcome = doubleCookies.checkUsername("y3423udhUDA7")
         assert.equal(outcome, 1)
     })
@@ -41,7 +41,7 @@ describe('Testing password checks', function() {
         assert.equal(outcome, 0)
     })
     it("Testing no number", () => {
-        const outcome = doubleCookies.checkPassword("iuUIHIU!")
+        const outcome = doubleCookies.checkPassword("iuhHUIHIU!")
         assert.equal(outcome, 0)
     })
     it("Testing no lowercase character", () => {
