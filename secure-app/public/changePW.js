@@ -1,5 +1,6 @@
 const client = require('../databasepg');
 const bcrypt = require('bcrypt');
+const server = require('../app')
 
 exports.changePW = async (req, res) => {
 
@@ -12,52 +13,48 @@ exports.changePW = async (req, res) => {
     console.log(username)
     console.log(confirmPw)
 
-    if (!username || !oldPw || !newPw || !confirmPw) {
-        setTimeout(() => {
-            res.status(400).json({
-                error: "Please enter all fields.",
-            })
-        }, 2000)
-    } else try {
+    try {
         const data = await client.query(`SELECT * FROM accounts WHERE username = $1;`, [username])
         const user = data.rows;
 
         if (user.length === 0) {
             setTimeout(() => {
                 res.status(400).json({
-                    error: "Login Invalid!"
+                    error: "Change Invalid!"
                 })
             }, 2000)
-            
+
             // check if password entered and old registered password matches
-            bcrypt.compare(oldPw, user[0].password, (err, result) => {
-                if (result) {
-                    console.log("Same pass")
-                    if (oldPw === newPw) {
-                        setTimeout(() => {
-                            res.status(400).json({
-                                error: "New password cannot be the same as old password."
-                            })
-                        }, 2000)
-                    } else if (confirmPw != newPw) {
-                        console.log("Confirmed passwords dont match")
-                    } else if (confirmPw === newPw) {
-                        bcrypt.hash(confirmPw, 10, (err, hash) => {
-                            client.query(`UPDATE accounts SET password = $2 WHERE username = $1`, [username, hash], function (e, results) {
-                                if (err) {
-                                    console.log("Failed to update password " + e)
-                                    return
-                                }
-                            })
-                            console.log("Password change success.")
-                            res.redirect('/dashboard.html');
-                        })
-                    }
-                } else {
-                    console.log("Wrong pass")
-                }
-            })
+            
         }
+        bcrypt.compare(oldPw, user[0].password, (err, result) => {
+            if (result && confirmPw === newPw) {
+                // console.log("Same pass")
+                bcrypt.hash(confirmPw, 10, (err, hash) => {
+
+                    client.query(`SELECT * FROM accounts WHERE username = $1`, [username], (err, result) => {
+                        const resultRow = result.rows
+                        const tokenRow = resultRow[0].token
+                        console.log("Token is " + tokenRow);
+                        const userData = {
+                            username: username,
+                            password: hash,
+                        }
+
+                        server.createSession(tokenRow, userData)
+                        res.cookie('sessionID', server.sessions[tokenRow].id)
+                        console.log("Cookie: " + res.get('Set-Cookie'))
+
+                        setTimeout(() => {
+                            res.redirect('/validateCPW.html');
+                        }, 2000)
+                    })
+                    
+                })
+            } else {
+                console.log("Wrong pass")
+            }
+        })
     } catch (err) {
         console.log(err);
         setTimeout(() => {

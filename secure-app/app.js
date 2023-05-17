@@ -47,7 +47,6 @@ app.use(bodyParser.json())
 app.use(cookieParser());
 
 
-
 client.connect((err) => { // Connected Database
 
     if (err) {

@@ -3,6 +3,7 @@ const qrcode = require('qrcode')
 const client = require('../databasepg');
 const querystring = require('querystring');
 const server = require('../app')
+const CryptoJS = require('crypto-js');
 
 require("dotenv").config();
 
@@ -37,9 +38,11 @@ exports.verify = async (req, res) => {
   {
     const cookieID = req.cookies.sessionID
     console.log("Verified!")
+    const cipherSpecial = CryptoJS.AES.encrypt(secret2fa, process.env.ENCRYPTION_SECRET_KEY).toString();
+    console.log("Encrypted secret" + cipherSpecial)
     client.query(`UPDATE accounts 
                   SET special = $1
-                  WHERE token = $2;`, [secret2fa, cookieID], (err) => {
+                  WHERE token = $2;`, [cipherSpecial, cookieID], (err) => {
       
       res.redirect('/secureLogin.html');
       

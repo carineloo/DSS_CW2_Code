@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" http-equiv="Content-Security-Policy" initial-scale=1" charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
+
+</head>
+
+
+
+<body>
+    <form id="2fa-form" method="post" action="/user/validateCPW" novalidate>
+        <input type="hidden" id="csrf_token" name="_csrf" value="">
+
+        <label for="otp">One Time Password:</label>
+        <input type="text" name="otp" id="otp" placeholder="Enter otp from app" required>
+
+        <p class="error-message" id="error-message"></p>
+
+        <button id="submit-otp-btn" type="submit" value="Validate" onclick="submitOTP()">Verify!</button>
+    </form>
+        
+
+</body>
+
+<script src="validateCPW.js"></script>
+
+</html>

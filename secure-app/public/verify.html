@@ -26,27 +26,6 @@
 
 </body>
 
-<script>
-    var currentTime = new Date().getTime();
-
-    document.onmousemove = function (event) {
-        currentTime = new Date().getTime();
-    }
-    document.onkeypress = function () {
-        currentTime = new Date().getTime();
-    }
-    function pageRefresh() {
-        if (new Date().getTime() - currentTime >= 600000) {
-            alert("Session expired please login again.");
-            location.href = '/secureLogin.html';
-        } else {
-            setTimeout(pageRefresh, 600000);
-        }
-    }
-    setTimeout(pageRefresh, 1000);
-
-    
-</script>
 
 <script src="verify.js"></script>
 

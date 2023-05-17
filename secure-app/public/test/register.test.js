@@ -1,12 +1,5 @@
 const register = require('../register.js')
 const assert = require('assert');
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-
-// You need to import your server
-const app = require('../app');
-
-const should = chai.should();
 
 describe('Testing email checks', function() {
     it("Testing email no '@'", () => {
