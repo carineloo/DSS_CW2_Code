@@ -135,17 +135,21 @@ function performChecksPWCheck() {
     const confirm_password = document.getElementById("confirm-password").value
 
     // check for any empty fields
-    if (!PWUsername || !old_password || new_password || confirm_password) {
+    if (!PWUsername || !old_password || !new_password || !confirm_password) {
         alert("Please enter all fields.")
         stopRefresh3()
     } else if (!checkUsername(PWUsername)) {
         alert("Username should only have alphanumeric characters!")
         stopRefresh3()
+    } else if (new_password === old_password) {
+        alert("New password cannot be the same as old password.")
+        stopRefresh3()
     } else if (!checkPassword(new_password)) {
         alert("Password should have 8 - 16 characters, at least one uppercase letter, one lowercase letter, one number and one special character.")
-        stopRefresh()
-    } else {
-        submitForm()
+        stopRefresh3()
+    } else if (confirm_password != new_password) {
+        alert("Confirmed passwords don't match.")
+        stopRefresh3()
     }
 }
 

@@ -3,6 +3,7 @@ const qrcode = require('qrcode')
 const client = require('../databasepg');
 const querystring = require('querystring');
 const server = require('../app')
+const CryptoJS = require('crypto-js');
 
 require("dotenv").config();
 
@@ -21,27 +22,28 @@ exports.verify = async (req, res) => {
 
     console.log(actualToken)
 
-    const verified = speakeasy.totp.verify({
-        secret: secret2fa,
-        encoding: 'base32',
-        token: token,
-        window: 2
-    })
-    if (verified) {
-        const cookieID = req.cookies.sessionID
-        console.log("Verified!")
-        client.query(`UPDATE accounts 
+  const verified = speakeasy.totp.verify({
+      secret: secret2fa,
+      encoding: 'base32',
+      token: token,
+      window: 2
+  })
+  if(verified)
+  {
+    const cookieID = req.cookies.sessionID
+    console.log("Verified!")
+    client.query(`UPDATE accounts 
                   SET special = $1
                   WHERE token = $2;`, [secret2fa, cookieID], (err) => {
-
-            res.redirect('/secureLogin.html');
-
-        })
-    }
-    else {
-        console.log("Not verified")
-    }
-
+      
+      res.redirect('/secureLogin.html');
+      
+    })
+  }
+  else{
+    console.log("Not verified")
+  }
+    
 }
 
 

@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const session = require('express-session');
 require("dotenv").config();
 const server = require('../app')
+const CryptoJS = require('crypto-js');
 
 /** xss **/
 
@@ -24,13 +25,6 @@ function checkPassword(password) {
     const pattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,16}$/g;
     return pattern.test(password)
 }
-
-exports.checkUsername = checkUsername
-exports.checkEmail = checkEmail
-exports.checkPassword = checkPassword
-
-// https for MITM attack //
-
 /** xss **/
 
 exports.register = async (req, res) => {
@@ -76,8 +70,9 @@ exports.register = async (req, res) => {
 
                 // make token
                 const token = jwt.sign({ username: user.newUsername, expiresIn: 60 * 1 }, process.env.SECRET_KEY);
+                const cipherEmail = CryptoJS.AES.encrypt(user.newEmail, process.env.ENCRYPTION_SECRET_KEY).toString();
 
-                client.query(`INSERT INTO accounts (username, email, password, token) VALUES ($1, $2, $3, $4);`, [user.newUsername, user.newEmail, user.newPassword, token], (err) => {
+                client.query(`INSERT INTO accounts (username, email, password, token) VALUES ($1, $2, $3, $4);`, [user.newUsername, cipherEmail, user.newPassword, token], (err) => {
                     if (err) {
                         flag = 0;
                         console.error(err);
